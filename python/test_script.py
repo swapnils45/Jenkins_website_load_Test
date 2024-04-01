@@ -1,34 +1,26 @@
 from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
 
-def test_website_load():
-    print("Starting the test...")
+def test_load_atg_website():
+    # Open a Chrome browser
+    driver = webdriver.Chrome()
     
     try:
-        # Open the browser
-        driver = webdriver.Chrome()  # or any other WebDriver you prefer
-        
-        # Navigate to the website
+        # Navigate to the atg.world website
         driver.get("https://atg.world/")
-        print("Navigating to https://atg.world/...")
         
-        # Check if the title contains the expected text
-        if "ATG - Discover new worlds" in driver.title:
-            print("Website loaded successfully!")
-            assert True
-        else:
-            print("Website didn't load properly!")
-            assert False
+        # Check if the website title contains the expected text
+        assert "ATG - Discover new worlds" in driver.title
         
-    except WebDriverException as e:
-        print("An error occurred while trying to load the website:", e)
-        assert False
+        print("Website loaded successfully")
+    
+    except Exception as e:
+        # Print error message if website doesn't load properly
+        print("Website loading failed:", e)
+        raise
     
     finally:
         # Close the browser
-        if 'driver' in locals():
-            driver.quit()
-            print("Browser closed.")
+        driver.quit()
 
 if __name__ == "__main__":
-    test_website_load()
+    test_load_atg_website()
